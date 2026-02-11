@@ -115,11 +115,151 @@
         
         <div class="status-card">
             <h2>Actions</h2>
-            <a href="#" class="btn">Run Data Analysis</a>
-            <a href="#" class="btn">Generate Report</a>
-            <a href="#" class="btn">View Logs</a>
-            <a href="#" class="btn">System Settings</a>
+            <button id="run-analysis-btn" class="btn">Run Data Analysis</button>
+            <button id="generate-report-btn" class="btn">Generate Report</button>
+            <button id="view-logs-btn" class="btn">View Logs</button>
+            <button id="system-settings-btn" class="btn">System Settings</button>
         </div>
+        
+        <!-- Status Message -->
+        <div id="status-message" class="status-card" style="display:none;">
+            <p id="status-text"></p>
+        </div>
+        
+        <!-- JavaScript for API calls -->
+        <script>
+            // Function to show status messages
+            function showStatus(message, isError = false) {
+                const statusDiv = document.getElementById('status-message');
+                const statusText = document.getElementById('status-text');
+                
+                statusText.textContent = message;
+                statusText.style.color = isError ? 'red' : 'green';
+                statusDiv.style.display = 'block';
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            }
+            
+            // Event listeners for buttons
+            document.getElementById('run-analysis-btn').addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/api/run-analysis', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        showStatus(data.message || 'Analysis started successfully');
+                    } else {
+                        showStatus(data.message || 'Failed to start analysis', true);
+                    }
+                } catch (error) {
+                    showStatus(`Error: ${error.message}`, true);
+                }
+            });
+            
+            document.getElementById('generate-report-btn').addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/api/generate-report', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        showStatus(data.message || 'Report generation started successfully');
+                    } else {
+                        showStatus(data.message || 'Failed to start report generation', true);
+                    }
+                } catch (error) {
+                    showStatus(`Error: ${error.message}`, true);
+                }
+            });
+            
+            document.getElementById('view-logs-btn').addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/api/view-logs', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        showStatus(`Found ${data.logs.length} log files`);
+                        
+                        // Display logs in a new section
+                        const logsSection = document.createElement('div');
+                        logsSection.className = 'status-card';
+                        logsSection.innerHTML = '<h3>Recent Log Entries</h3>';
+                        
+                        data.logs.forEach(log => {
+                            const logTitle = document.createElement('h4');
+                            logTitle.textContent = log.filename;
+                            logsSection.appendChild(logTitle);
+                            
+                            const logContent = document.createElement('pre');
+                            logContent.style.backgroundColor = '#f0f0f0';
+                            logContent.style.padding = '10px';
+                            logContent.style.borderRadius = '4px';
+                            logContent.style.overflow = 'auto';
+                            logContent.style.maxHeight = '200px';
+                            logContent.textContent = log.recent_entries;
+                            logsSection.appendChild(logContent);
+                        });
+                        
+                        document.querySelector('.container').appendChild(logsSection);
+                    } else {
+                        showStatus(data.message || 'Failed to retrieve logs', true);
+                    }
+                } catch (error) {
+                    showStatus(`Error: ${error.message}`, true);
+                }
+            });
+            
+            document.getElementById('system-settings-btn').addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/api/system-settings', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        showStatus('System settings retrieved successfully');
+                        
+                        // Display settings in a modal or new section
+                        const settingsSection = document.createElement('div');
+                        settingsSection.className = 'status-card';
+                        settingsSection.innerHTML = '<h3>System Settings</h3><pre>' + JSON.stringify(data.settings, null, 2) + '</pre>';
+                        
+                        // Remove any existing settings sections
+                        const existingSettings = document.querySelector('#system-settings-display');
+                        if (existingSettings) {
+                            existingSettings.remove();
+                        }
+                        
+                        settingsSection.id = 'system-settings-display';
+                        document.querySelector('.container').appendChild(settingsSection);
+                    } else {
+                        showStatus(data.message || 'Failed to retrieve settings', true);
+                    }
+                } catch (error) {
+                    showStatus(`Error: ${error.message}`, true);
+                }
+            });
+        </script>
         
         <footer>
             <p>Data Auto System &copy; 2026 | Dashboard v1.0</p>

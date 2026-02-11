@@ -1,0 +1,75 @@
+# Production Configuration for Data Automation System
+
+system:
+  name: "Data Auto System - Production"
+  version: "2.0.0"
+  debug: false
+  environment: "production"
+
+dashboard:
+  host: "0.0.0.0"
+  port: 5000
+  debug: false
+  secret_key: "${DASHBOARD_SECRET_KEY:-fallback-secret-key-change-in-production}"
+  session_timeout: 3600  # 1 hour
+
+scheduler:
+  enabled: true
+  timezone: "UTC"
+  max_workers: 4
+  tasks:
+    analyzer:
+      enabled: true
+      schedule: "0 2 * * *"  # Daily at 2 AM
+      timeout: 1800  # 30 minutes
+    email_notifier:
+      enabled: true
+      schedule: "0 9 * * 1"  # Weekly on Monday at 9 AM
+      timeout: 300  # 5 minutes
+
+email:
+  enabled: true
+  smtp_server: "${SMTP_SERVER:-sandbox.smtp.mailtrap.io}"
+  smtp_port: "${SMTP_PORT:-2525}"
+  sender_email: "${SMTP_USERNAME:-5e87660b6bef5c}"
+  sender_password: "${SMTP_PASSWORD:-ca42c456469cd2}"
+  recipients: ["${ADMIN_EMAIL:-admin@example.com}"]
+  use_tls: true
+  use_ssl: false
+
+paths:
+  raw_data_dir: "/app/data/raw"
+  processed_data_dir: "/app/data/processed"
+  reports_dir: "/app/reports"
+  logs_dir: "/app/logs"
+  temp_dir: "/tmp"
+
+security:
+  rate_limit: 100  # requests per minute per IP
+  allowed_hosts: ["localhost", "127.0.0.1", ".local", "${HOSTNAME}"]
+  csrf_enabled: true
+  ssl_required: false  # Set to true in production with SSL
+
+data_processing:
+  supported_formats:
+    - ".csv"
+    - ".xlsx"
+    - ".xls"
+    - ".json"
+  max_file_size: 50  # MB
+  auto_clean_raw: true
+  backup_processed: true
+  validation_enabled: true
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_rotation: true
+  max_log_size: "10MB"
+  backup_count: 5
+
+database:  # If you decide to use a database later
+  enabled: false
+  url: "${DATABASE_URL:-sqlite:///data-auto-system.db}"
+  pool_size: 10
+  max_overflow: 20
