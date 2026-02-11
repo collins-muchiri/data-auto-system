@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Auto System Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        h1 {
+            color: #333;
+        }
+        .status-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Auto System Dashboard</h1>
+            <p>Monitor and manage your automated data workflows</p>
+        </header>
+        
+        <div class="status-card">
+            <h2>System Status</h2>
+            <p><strong>System Name:</strong> Data Auto System</p>
+            <p><strong>Status:</strong> <span style="color: green;">Operational</span></p>
+            <p><strong>Version:</strong> 1.0.0</p>
+            <p><strong>Uptime:</strong> 24 hours</p>
+        </div>
+        
+        <div class="status-card">
+            <h2>Recent Activities</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Status</th>
+                        <th>Time</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Data Analysis</td>
+                        <td><span style="color: green;">Completed</span></td>
+                        <td>2026-02-11 10:30:00</td>
+                        <td>Processed 1000 records</td>
+                    </tr>
+                    <tr>
+                        <td>Email Notification</td>
+                        <td><span style="color: green;">Sent</span></td>
+                        <td>2026-02-11 09:15:00</td>
+                        <td>Daily report sent to admin</td>
+                    </tr>
+                    <tr>
+                        <td>Scheduled Task</td>
+                        <td><span style="color: orange;">Pending</span></td>
+                        <td>2026-02-12 02:00:00</td>
+                        <td>Next data analysis run</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="status-card">
+            <h2>Actions</h2>
+            <a href="#" class="btn">Run Data Analysis</a>
+            <a href="#" class="btn">Generate Report</a>
+            <a href="#" class="btn">View Logs</a>
+            <a href="#" class="btn">System Settings</a>
+        </div>
+        
+        <footer>
+            <p>Data Auto System &copy; 2026 | Dashboard v1.0</p>
+        </footer>
+    </div>
+</body>
+</html>
