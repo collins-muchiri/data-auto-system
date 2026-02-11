@@ -236,6 +236,11 @@ python app.py
 ```
 The dashboard will be accessible at `http://localhost:5000`
 
+Alternatively, you can run the dashboard from the main project directory:
+```bash
+python run_system.py --component dashboard
+```
+
 #### Run the Scheduler Only
 ```bash
 cd scripts
