@@ -50,6 +50,9 @@ data/raw/*.xls
 # Reports
 reports/*
 
+# Pharma data output
+pharma_data_output/
+
 # Local config (if any sensitive info gets added)
 config.local.yaml
 *.local.yaml
