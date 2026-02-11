@@ -1,25 +1,42 @@
+# Configuration for Data Automation System
+
 system:
-  name: "Data Automation System"
-  version: "1.0"
-  
-data:
-  input_path: "data/raw/"
-  output_path: "data/processed/"
-  backup_enabled: true
-  
-email:
+  name: "Data Auto System"
+  version: "1.0.0"
+  debug: false
+
+dashboard:
+  host: "0.0.0.0"
+  port: 5000
+  debug: false
+
+scheduler:
   enabled: true
+  timezone: "UTC"
+  tasks:
+    analyzer:
+      enabled: true
+      schedule: "0 2 * * *"  # Daily at 2 AM
+    email_notifier:
+      enabled: true
+      schedule: "0 9 * * 1"  # Weekly on Monday at 9 AM
+
+email:
   smtp_server: "sandbox.smtp.mailtrap.io"
   smtp_port: 2525
   sender_email: "test@data-automation.com"
   sender_password: "ca42c456469cd2"  # Your Mailtrap password
-  recipients: ["muchiricollins98@gmail.com"]  # Change to your actual email
-  
-analysis:
-  default_dataset: "sample_sales_data.csv"
-  auto_run: true
-  schedule: "daily"
-  
-logging:
-  level: "INFO"
-  file: "logs/system.log"
+
+paths:
+  raw_data_dir: "./data/raw"
+  processed_data_dir: "./data/processed"
+  reports_dir: "./reports"
+  logs_dir: "./logs"
+
+data_processing:
+  supported_formats:
+    - ".csv"
+    - ".xlsx"
+    - ".xls"
+  auto_clean_raw: false
+  backup_processed: true

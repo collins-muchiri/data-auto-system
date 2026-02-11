@@ -44,10 +44,10 @@ def create_sample_sales_data(output_path='data/raw/sample_sales_data.csv', seed=
         output_dir.mkdir(parents=True, exist_ok=True)
         
         df.to_csv(output_path, index=False)
-        print(f"✅ Created sample dataset with {len(df)} rows at {output_path}")
+        print(f"[SUCCESS] Created sample dataset with {len(df)} rows at {output_path}")
         return df
     except Exception as e:
-        print(f"❌ Error creating dataset: {e}")
+        print(f"[ERROR] Error creating dataset: {e}")
         return None
 
 def validate_data(df):
@@ -74,11 +74,11 @@ def validate_data(df):
                 issues.append(f"Column '{col}' is not float type")
     
     if issues:
-        print("⚠️  Validation issues found:")
+        print("[WARNING] Validation issues found:")
         for issue in issues:
             print(f"   - {issue}")
     else:
-        print("✅ Data validation passed")
+        print("[SUCCESS] Data validation passed")
     
     return len(issues) == 0
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     df = create_sample_sales_data()
     if df is not None:
         validate_data(df)
-        print("\n📊 Dataset Info:")
+        print("\n[INFO] Dataset Info:")
         print(df.head())
-        print(f"\n📈 Dataset Shape: {df.shape}")
-        print(f"📅 Date Range: {df['InvoiceDate'].min()} to {df['InvoiceDate'].max()}")
+        print(f"\n[INFO] Dataset Shape: {df.shape}")
+        print(f"[INFO] Date Range: {df['InvoiceDate'].min()} to {df['InvoiceDate'].max()}")

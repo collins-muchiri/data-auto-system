@@ -58,11 +58,11 @@ def test_mailtrap_connection(smtp_server, smtp_port, username, password, sender_
         server.sendmail(sender_email, "test@your_mailtrap_inbox.com", text)
         server.quit()
 
-        print("✅ Successfully connected to Mailtrap and sent test email!")
+        print("[SUCCESS] Successfully connected to Mailtrap and sent test email!")
         return True
 
     except Exception as e:
-        print(f"❌ Failed to connect to Mailtrap: {str(e)}")
+        print(f"[ERROR] Failed to connect to Mailtrap: {str(e)}")
         return False
 
 
@@ -78,7 +78,7 @@ def test_mailtrap_with_config():
     
     # Check if using Mailtrap
     if 'mailtrap' in email_config.get('smtp_server', '').lower():
-        print(f"📧 Testing Mailtrap configuration...")
+        print(f"[EMAIL] Testing Mailtrap configuration...")
         print(f"   SMTP Server: {email_config['smtp_server']}")
         print(f"   SMTP Port: {email_config['smtp_port']}")
         print(f"   Sender Email: {email_config['sender_email']}")
@@ -92,16 +92,16 @@ def test_mailtrap_with_config():
         )
         
         if success:
-            print("\n🎉 Mailtrap test successful!")
+            print("\n[SUCCESS] Mailtrap test successful!")
             print("Your Data Auto System is configured to use Mailtrap for email testing.")
             print("Emails will be captured in your Mailtrap inbox instead of being sent to real recipients.")
         else:
-            print("\n💥 Mailtrap test failed!")
+            print("\n[ERROR] Mailtrap test failed!")
             print("Please check your Mailtrap configuration in config.yaml")
         
         return success
     else:
-        print("❌ Current configuration is not set up for Mailtrap")
+        print("[ERROR] Current configuration is not set up for Mailtrap")
         print("To use Mailtrap, update your config.yaml with Mailtrap SMTP settings:")
         print("""
 email:
@@ -134,21 +134,21 @@ def setup_mailtrap_demo_config():
     with open('mailtrap_demo_config.yaml', 'w') as f:
         yaml.dump(demo_config, f, default_flow_style=False)
     
-    print("📋 Demo Mailtrap configuration saved to 'mailtrap_demo_config.yaml'")
-    print("💡 Remember to replace the placeholder values with your actual Mailtrap credentials!")
+    print("[INFO] Demo Mailtrap configuration saved to 'mailtrap_demo_config.yaml'")
+    print("[NOTE] Remember to replace the placeholder values with your actual Mailtrap credentials!")
 
 
 if __name__ == "__main__":
-    print("🧪 Testing Mailtrap Email Configuration for Data Auto System\n")
+    print("[TEST] Testing Mailtrap Email Configuration for Data Auto System\n")
     
     # Test current configuration
     success = test_mailtrap_with_config()
     
     if not success:
-        print("\n🔧 Creating a demo Mailtrap configuration for reference...")
+        print("\n[INFO] Creating a demo Mailtrap configuration for reference...")
         setup_mailtrap_demo_config()
         
-        print("\n📝 To configure Mailtrap:")
+        print("\n[INSTRUCTIONS] To configure Mailtrap:")
         print("   1. Sign up at https://mailtrap.io")
         print("   2. Get your SMTP credentials from the demo inbox")
         print("   3. Update config.yaml with your Mailtrap credentials")
