@@ -2,8 +2,10 @@
 Web dashboard for the Data Automation System
 """
 from flask import Flask, render_template
+import os
 
-app = Flask(__name__)
+# Create Flask app with explicit template folder
+app = Flask(__name__, template_folder='templates')
 
 @app.route('/')
 def index():

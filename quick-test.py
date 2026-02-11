@@ -1,22 +1,17 @@
 import os
-import yaml
-from scripts.analyzer import DataAnalyzer
+import pandas as pd
+from scripts.analyzer import analyze_data, process_directory
 from scripts.email_notifier import EmailNotifier
 
 def quick_test():
     """Test the complete system"""
-    print("🧪 Running quick system test...")
-    
+    print("[TEST] Running quick system test...")
+
     # Ensure directories exist
     os.makedirs('data/raw', exist_ok=True)
     os.makedirs('reports', exist_ok=True)
-    
-    # Test data analyzer
-    print("1. Testing data analyzer...")
-    analyzer = DataAnalyzer()
-    
+
     # Create minimal test data
-    import pandas as pd
     test_data = pd.DataFrame({
         'InvoiceNo': ['INV001', 'INV002'],
         'StockCode': ['SKU001', 'SKU002'],
@@ -28,39 +23,48 @@ def quick_test():
         'Country': ['United Kingdom', 'Germany']
     })
     test_data.to_csv('data/raw/sample_sales_data.csv', index=False)
+
+    # Test data analyzer
+    print("1. Testing data analyzer...")
+    insights = analyze_data('data/raw/sample_sales_data.csv')
     
-    # Analyze data
-    df = analyzer.load_dataset()
-    if df is not None:
-        df_clean = analyzer.basic_cleaning(df)
-        results = analyzer.sales_analysis(df_clean)
-        report = analyzer.generate_report(results)
-        
-        print("✅ Data analysis successful!")
-        
-        # Test email
-        print("2. Testing email notification...")
-        notifier = EmailNotifier()
-        
-        # Create simple test files
-        with open('reports/test_report.txt', 'w') as f:
-            f.write("This is a test report file.")
-        
-        # Send test email
-        success = notifier.send_email(
-            subject="🧪 System Test Complete",
-            body=f"Data Automation System Test Successful!\n\n{report}",
-            attachments=['reports/test_report.txt']
-        )
-        
-        if success:
-            print("🎉 System test completed successfully!")
-            print("📨 Check Mailtrap for the test email")
-        else:
-            print("⚠️ Email test failed, but system is functional")
-    
+    if insights:
+        print("[SUCCESS] Data analysis successful!")
+        print(f"   - Data shape: {insights['shape']}")
+        print(f"   - Columns: {insights['columns']}")
+        print(f"   - Missing values: {sum(insights['missing_values'].values())}")
     else:
-        print("❌ Data loading failed")
+        print("[ERROR] Data analysis failed")
+        return
+
+    # Test email
+    print("2. Testing email notification...")
+    
+    # Create simple test report
+    with open('reports/test_report.txt', 'w') as f:
+        f.write("This is a test report file.\n\n")
+        f.write(f"Data Analysis Results:\n")
+        f.write(f"- Shape: {insights['shape']}\n")
+        f.write(f"- Columns: {insights['columns']}\n")
+        f.write(f"- Missing Values: {insights['missing_values']}\n")
+
+    # Create email notifier instance
+    # Using the configuration from config.yaml
+    notifier = EmailNotifier()
+
+    # Send test email
+    success = notifier.send_email(
+        subject="[TEST] System Test Complete",
+        body="Data Automation System Test Successful!\n\n"
+             "This is a test email to verify the email notification functionality.",
+        attachments=['reports/test_report.txt']
+    )
+
+    if success:
+        print("[SUCCESS] System test completed successfully!")
+        print("[INFO] Check Mailtrap for the test email")
+    else:
+        print("[WARNING] Email test failed, but system is functional (this is expected if using test credentials)")
 
 if __name__ == "__main__":
     quick_test()

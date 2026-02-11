@@ -1,7 +1,7 @@
 import smtplib
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
-from email.mime.base import MimeBase
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
 from email import encoders
 import os
 import yaml
@@ -14,7 +14,7 @@ class EmailNotifier:
                 config = yaml.safe_load(file)
                 self.email_config = config['email']
         except Exception as e:
-            print(f"⚠️ Config error: {e}")
+            print(f"[WARNING] Config error: {e}")
             # Set Mailtrap defaults for testing
             self.email_config = {
                 'enabled': True,
@@ -28,24 +28,24 @@ class EmailNotifier:
     def send_email(self, subject, body, attachments=[]):
         """Send email with optional attachments"""
         if not self.email_config['enabled']:
-            print("📧 Email notifications disabled in config")
+            print("[EMAIL] Email notifications disabled in config")
             return False
             
         try:
             # Create message
-            msg = MimeMultipart()
+            msg = MIMEMultipart()
             msg['From'] = self.email_config['sender_email']
             msg['To'] = ", ".join(self.email_config['recipients'])
             msg['Subject'] = subject
-            
+
             # Add body
-            msg.attach(MimeText(body, 'plain'))
-            
+            msg.attach(MIMEText(body, 'plain'))
+
             # Add attachments
             for attachment_path in attachments:
                 if os.path.exists(attachment_path):
                     with open(attachment_path, 'rb') as file:
-                        part = MimeBase('application', 'octet-stream')
+                        part = MIMEBase('application', 'octet-stream')
                         part.set_payload(file.read())
                     encoders.encode_base64(part)
                     part.add_header(
@@ -57,15 +57,15 @@ class EmailNotifier:
             # Send email using your Mailtrap credentials
             with smtplib.SMTP(self.email_config['smtp_server'], self.email_config['smtp_port']) as server:
                 server.starttls()
-                server.login("5e87660b6bef5c", self.email_config['sender_password'])
+                server.login(self.email_config['sender_email'], self.email_config['sender_password'])
                 text = msg.as_string()
                 server.sendmail(self.email_config['sender_email'], self.email_config['recipients'], text)
             
-            print(f"✅ Email sent successfully to {len(self.email_config['recipients'])} recipients")
+            print(f"[SUCCESS] Email sent successfully to {len(self.email_config['recipients'])} recipients")
             return True
             
         except Exception as e:
-            print(f"❌ Error sending email: {str(e)}")
+            print(f"[ERROR] Error sending email: {str(e)}")
             return False
             
     def send_analysis_report(self, analysis_report, attachments=[]):

@@ -22,10 +22,12 @@ scheduler:
       schedule: "0 9 * * 1"  # Weekly on Monday at 9 AM
 
 email:
+  enabled: true
   smtp_server: "sandbox.smtp.mailtrap.io"
   smtp_port: 2525
   sender_email: "test@data-automation.com"
   sender_password: "ca42c456469cd2"  # Your Mailtrap password
+  recipients: ["muchirikamama@outlook.com"]  # Add recipients for the email
 
 paths:
   raw_data_dir: "./data/raw"
