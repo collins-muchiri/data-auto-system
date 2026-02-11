@@ -148,6 +148,109 @@ def list_reports():
     return reports
 
 
+def send_report_via_email(report_path, subject=None, custom_message=None):
+    """
+    Send a generated report via email
+    
+    Args:
+        report_path (str): Path to the report file to send
+        subject (str): Custom subject for the email
+        custom_message (str): Custom message to include in the email body
+    
+    Returns:
+        bool: True if email was sent successfully, False otherwise
+    """
+    import sys
+    import os
+    # Add the scripts directory to the path so we can import email_notifier
+    sys.path.insert(0, os.path.dirname(__file__))
+    from email_notifier import EmailNotifier
+    
+    # Create email notifier instance
+    notifier = EmailNotifier()
+    
+    # Create default subject if none provided
+    if not subject:
+        subject = f"📊 Report: {os.path.basename(report_path)} - {datetime.now().strftime('%Y-%m-%d')}"
+    
+    # Create default message if none provided
+    if not custom_message:
+        custom_message = f"""
+Hello,
+
+Please find attached the requested report: {os.path.basename(report_path)}.
+
+Generated at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+Best regards,
+Data Automation System
+"""
+    
+    # Send the email with the report as an attachment
+    success = notifier.send_email(
+        subject=subject,
+        body=custom_message,
+        attachments=[report_path]
+    )
+    
+    return success
+
+
+def send_analysis_results_via_email(insights, subject=None, custom_message=None):
+    """
+    Send analysis results directly via email without saving to file
+    
+    Args:
+        insights (dict): Insights from data analysis
+        subject (str): Custom subject for the email
+        custom_message (str): Custom message to include in the email body
+    
+    Returns:
+        bool: True if email was sent successfully, False otherwise
+    """
+    import sys
+    import os
+    # Add the scripts directory to the path so we can import email_notifier
+    sys.path.insert(0, os.path.dirname(__file__))
+    from email_notifier import EmailNotifier
+    
+    # Create email notifier instance
+    notifier = EmailNotifier()
+    
+    # Create default subject if none provided
+    if not subject:
+        subject = f"🔍 Analysis Results - {datetime.now().strftime('%Y-%m-%d')}"
+    
+    # Create email body with analysis insights
+    if not custom_message:
+        custom_message = f"""
+Hello,
+
+Here are the analysis results:
+
+Dataset Summary:
+- Shape: {insights.get('shape', (0, 0))}
+- Columns: {', '.join(insights.get('columns', []))}
+- Missing Values Total: {sum(insights.get('missing_values', {}).values())}
+
+Numeric Summary:
+{json.dumps(insights.get('numeric_summary', {}), indent=2)}
+
+Generated at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+Best regards,
+Data Automation System
+"""
+    
+    # Send the email with the analysis results
+    success = notifier.send_email(
+        subject=subject,
+        body=custom_message
+    )
+    
+    return success
+
+
 if __name__ == "__main__":
     # Example usage
     print("Report generation module loaded.")

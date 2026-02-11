@@ -126,6 +126,31 @@
             <p id="status-text"></p>
         </div>
         
+        <!-- Modal for sending reports via email -->
+        <div id="emailModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
+            <div class="modal-content" style="background-color: white; margin: 15% auto; padding: 20px; border-radius: 8px; width: 60%; max-width: 500px;">
+                <h3>Send Report via Email</h3>
+                <form id="emailForm">
+                    <div style="margin-bottom: 15px;">
+                        <label for="reportSelect">Select Report:</label>
+                        <select id="reportSelect" style="width: 100%; padding: 8px; margin-top: 5px;"></select>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="emailSubject">Subject:</label>
+                        <input type="text" id="emailSubject" placeholder="Enter email subject" style="width: 100%; padding: 8px; margin-top: 5px;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="emailMessage">Message:</label>
+                        <textarea id="emailMessage" placeholder="Enter your message" rows="4" style="width: 100%; padding: 8px; margin-top: 5px;"></textarea>
+                    </div>
+                    <div style="text-align: right;">
+                        <button type="button" id="cancelEmailBtn" class="btn" style="background-color: #6c757d; margin-right: 10px;">Cancel</button>
+                        <button type="submit" class="btn" style="background-color: #28a745;">Send Email</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
         <!-- JavaScript for API calls -->
         <script>
             // Function to show status messages
@@ -141,6 +166,54 @@
                 setTimeout(() => {
                     statusDiv.style.display = 'none';
                 }, 5000);
+            }
+            
+            // Function to populate report dropdown
+            async function populateReportDropdown() {
+                try {
+                    const response = await fetch('/api/get-reports', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        const selectElement = document.getElementById('reportSelect');
+                        selectElement.innerHTML = ''; // Clear existing options
+                        
+                        if (data.reports.length === 0) {
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.textContent = 'No reports available';
+                            selectElement.appendChild(option);
+                        } else {
+                            data.reports.forEach(report => {
+                                const option = document.createElement('option');
+                                option.value = report.filename;
+                                option.textContent = `${report.filename} (${new Date(report.modified).toLocaleString()})`;
+                                selectElement.appendChild(option);
+                            });
+                        }
+                    } else {
+                        console.error('Error getting reports:', data.message);
+                    }
+                } catch (error) {
+                    console.error('Error populating reports:', error);
+                }
+            }
+            
+            // Function to open email modal
+            function openEmailModal() {
+                document.getElementById('emailModal').style.display = 'block';
+                // Populate report dropdown
+                populateReportDropdown();
+            }
+            
+            // Function to close email modal
+            function closeEmailModal() {
+                document.getElementById('emailModal').style.display = 'none';
             }
             
             // Event listeners for buttons
@@ -182,6 +255,21 @@
                 } catch (error) {
                     showStatus(`Error: ${error.message}`, true);
                 }
+            });
+            
+            // Add a new button for sending reports via email
+            // We'll add this dynamically after the generate report button
+            const generateReportBtn = document.getElementById('generate-report-btn');
+            const sendEmailBtn = document.createElement('button');
+            sendEmailBtn.id = 'send-email-btn';
+            sendEmailBtn.className = 'btn';
+            sendEmailBtn.textContent = 'Send Report via Email';
+            sendEmailBtn.style.marginLeft = '10px';
+            generateReportBtn.parentNode.insertBefore(sendEmailBtn, generateReportBtn.nextSibling);
+            
+            // Event listener for send email button
+            document.getElementById('send-email-btn').addEventListener('click', () => {
+                openEmailModal();
             });
             
             document.getElementById('view-logs-btn').addEventListener('click', async () => {
@@ -257,6 +345,52 @@
                     }
                 } catch (error) {
                     showStatus(`Error: ${error.message}`, true);
+                }
+            });
+            
+            // Email form submission
+            document.getElementById('emailForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const reportFilename = document.getElementById('reportSelect').value;
+                const subject = document.getElementById('emailSubject').value;
+                const message = document.getElementById('emailMessage').value;
+                
+                try {
+                    const response = await fetch('/api/send-report-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            report_filename: reportFilename,
+                            subject: subject,
+                            message: message
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        showStatus(data.message || 'Report sent successfully via email');
+                        closeEmailModal();
+                    } else {
+                        showStatus(data.message || 'Failed to send report via email', true);
+                    }
+                } catch (error) {
+                    showStatus(`Error: ${error.message}`, true);
+                }
+            });
+            
+            // Cancel email button
+            document.getElementById('cancelEmailBtn').addEventListener('click', () => {
+                closeEmailModal();
+            });
+            
+            // Close modal when clicking outside of it
+            window.addEventListener('click', (e) => {
+                const modal = document.getElementById('emailModal');
+                if (e.target === modal) {
+                    closeEmailModal();
                 }
             });
         </script>

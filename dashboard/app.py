@@ -147,6 +147,82 @@ def view_logs():
         return jsonify({"success": False, "message": str(e)}), 500
 
 
+@app.route('/api/get-reports', methods=['GET'])
+def get_reports():
+    """API endpoint to get list of available reports"""
+    try:
+        import sys
+        import os
+        # Add the scripts directory to the path so we can import reports
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'scripts'))
+        
+        from reports import list_reports
+        
+        reports_list = list_reports()
+        
+        return jsonify({
+            "success": True,
+            "reports": reports_list
+        })
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
+
+
+@app.route('/api/send-report-email', methods=['POST'])
+def send_report_email():
+    """API endpoint to send a report via email"""
+    try:
+        import sys
+        import os
+        # Add the scripts directory to the path so we can import reports
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'scripts'))
+        
+        from reports import send_report_via_email, list_reports
+        
+        # Get the report to send (latest if not specified)
+        data = request.json
+        report_filename = data.get('report_filename')
+        
+        if not report_filename:
+            # Get the most recent report
+            reports_list = list_reports()
+            if not reports_list:
+                return jsonify({
+                    "success": False,
+                    "message": "No reports available to send"
+                }), 404
+            report_filename = reports_list[0]['filename']
+        
+        # Construct full path
+        report_path = os.path.join('..', 'reports', report_filename)
+        
+        if not os.path.exists(report_path):
+            return jsonify({
+                "success": False,
+                "message": f"Report file does not exist: {report_path}"
+            }), 404
+        
+        # Send the report via email
+        success = send_report_via_email(
+            report_path=report_path,
+            subject=data.get('subject'),
+            custom_message=data.get('message')
+        )
+        
+        if success:
+            return jsonify({
+                "success": True,
+                "message": f"Report '{report_filename}' sent successfully via email"
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "message": f"Failed to send report '{report_filename}' via email"
+            })
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
+
+
 @app.route('/api/system-settings', methods=['GET', 'POST'])
 def system_settings():
     """API endpoint to get or update system settings"""
