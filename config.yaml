@@ -25,8 +25,8 @@ email:
   enabled: true
   smtp_server: "sandbox.smtp.mailtrap.io"
   smtp_port: 2525
-  sender_email: "test@data-automation.com"
-  sender_password: "ca42c456469cd2"  # Your Mailtrap password
+  sender_email: "5e87660b6bef5c"
+  sender_password: "ca42c456469cd2"
   recipients: ["muchirikamama@outlook.com"]  # Add recipients for the email
 
 paths:
