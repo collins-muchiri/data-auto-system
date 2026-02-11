@@ -191,6 +191,106 @@ For issues and support:
 4. Add tests if applicable
 5. Submit a pull request
 
+## 📊 System Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           Data Auto System                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐        │
+│  │   Flask         │    │   Streamlit     │    │   Pharma Hub    │        │
+│  │   Dashboard     │    │   Dashboard     │    │   Integration   │        │
+│  │   (Port 5000)   │    │   (Port 8501)   │    │   (Port 8502)   │        │
+│  └─────────────────┘    └─────────────────┘    └─────────────────┘        │
+│              │                      │                      │               │
+│              ▼                      ▼                      ▼               │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                        Core Components                            │   │
+│  ├─────────────────┬─────────────────┬─────────────────┬─────────────┤   │
+│  │   Data          │   Analyzer      │   Scheduler     │   Email     │   │
+│  │   Processor     │                 │                 │   Notifier  │   │
+│  └─────────────────┴─────────────────┴─────────────────┴─────────────┘   │
+│              │                      │                      │               │
+│              ▼                      ▼                      ▼               │
+│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐        │
+│  │   Raw Data      │    │   Processed     │    │   Reports &     │        │
+│  │   Directory     │    │   Data          │    │   Logs          │        │
+│  │   (/data/raw)   │    │   (/data/proc)  │    │   (/logs)       │        │
+│  └─────────────────┘    └─────────────────┘    └─────────────────┘        │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+## 📈 System Flow
+
+1. **Data Ingestion**: CSV files uploaded via Streamlit or Pharma Hub
+2. **Processing**: Data Auto System processes and analyzes data
+3. **Storage**: Raw and processed data stored in organized directories
+4. **Visualization**: Real-time dashboards display analytics
+5. **Automation**: Scheduled tasks run automatically
+6. **Notifications**: Email alerts sent for important events
+7. **Reporting**: Comprehensive reports generated and stored
+
+## 📋 System Requirements
+
+### Hardware Requirements
+- **CPU**: 2+ cores recommended
+- **RAM**: 4GB minimum, 8GB+ recommended
+- **Storage**: 10GB free space for data and logs
+- **Network**: Stable internet connection for email notifications
+
+### Software Requirements
+- **OS**: Windows, macOS, or Linux
+- **Python**: 3.8 or higher
+- **Dependencies**: See requirements files
+- **Ports**: 5000 (Flask), 8501 (Streamlit), 8502 (Pharma Hub)
+
+### Runtime Dependencies
+- pandas
+- numpy
+- flask
+- streamlit
+- plotly
+- schedule
+- pyyaml
+- openpyxl
+- xlrd
+- requests
+
+## 📁 Directory Structure
+
+```
+data-auto-system/
+├── README.md                          # Documentation
+├── requirements.txt                   # Python dependencies
+├── requirements-production.txt        # Production dependencies
+├── requirements-streamlit.txt         # Streamlit dependencies
+├── config.yaml                        # Configuration file
+├── config-production.yaml             # Production configuration
+├── run_system.py                      # Main entry point
+├── start-production.sh                # Production startup script
+├── Dockerfile                         # Container configuration
+├── docker-compose.yml                 # Multi-container setup
+├── dashboard/                         # Flask dashboard
+│   ├── app.py
+│   └── templates/
+├── dashboard_streamlit.py             # Streamlit dashboard
+├── phama.py                           # Pharma Hub integration
+├── scripts/                           # Core automation scripts
+│   ├── analyzer.py
+│   ├── scheduler.py
+│   ├── email_notifier.py
+│   ├── reports.py
+│   └── data/
+│       └── raw/
+│           └── synthetic_data.py
+├── data/                              # Data files
+│   ├── raw/
+│   └── processed/
+├── reports/                           # Generated reports
+├── logs/                              # System logs
+└── notebooks/                         # Jupyter notebooks
+```
+
 ## 📄 License
 
 [Specify your license here]
