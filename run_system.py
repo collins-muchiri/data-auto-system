@@ -49,6 +49,7 @@ def run_dashboard(config):
         dashboard_port = config['dashboard']['port']
         
         # Change to dashboard directory and run the app
+        original_dir = os.getcwd()
         os.chdir('dashboard')
         cmd = ['python', 'app.py']
         
@@ -58,8 +59,14 @@ def run_dashboard(config):
         
         print(f"Starting dashboard on {dashboard_host}:{dashboard_port}")
         subprocess.run(cmd, env=env)
+        
+        # Return to original directory
+        os.chdir(original_dir)
     except Exception as e:
         print(f"Error starting dashboard: {e}")
+        
+        # Ensure we return to original directory even if there's an error
+        os.chdir(original_dir)
 
 
 def run_scheduler(config):
