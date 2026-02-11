@@ -1,0 +1,25 @@
+system:
+  name: "Data Automation System"
+  version: "1.0"
+  
+data:
+  input_path: "data/raw/"
+  output_path: "data/processed/"
+  backup_enabled: true
+  
+email:
+  enabled: true
+  smtp_server: "sandbox.smtp.mailtrap.io"
+  smtp_port: 2525
+  sender_email: "test@data-automation.com"
+  sender_password: "ca42c456469cd2"  # Your Mailtrap password
+  recipients: ["muchiricollins98@gmail.com"]  # Change to your actual email
+  
+analysis:
+  default_dataset: "sample_sales_data.csv"
+  auto_run: true
+  schedule: "daily"
+  
+logging:
+  level: "INFO"
+  file: "logs/system.log"

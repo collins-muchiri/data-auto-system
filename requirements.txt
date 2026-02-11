@@ -1,0 +1,28 @@
+# Core data analysis
+pandas>=2.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Automation & scheduling
+schedule>=1.2.0
+pyyaml>=6.0
+
+# Web dashboard
+streamlit>=1.28.0
+
+# Visualization enhancements
+plotly>=5.15.0
+
+# Excel support (optional)
+openpyxl>=3.1.0
+
+# Email utilities (smtplib is built-in)
+email-validator>=2.0.0
+python-dotenv>=1.0.0
+
+# Jupyter for notebooks
+jupyter>=1.0.0
+
+# For reading various file formats
+xlrd>=2.0.0  # Excel files

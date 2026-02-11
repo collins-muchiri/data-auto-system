@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+data-auto-system-env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/*.log
+
+# Data files (except the raw directory structure)
+data/processed/*
+!data/processed/.gitkeep
+data/raw/*.csv
+data/raw/*.xlsx
+data/raw/*.xls
+
+# Reports
+reports/*
+
+# Local config (if any sensitive info gets added)
+config.local.yaml
+*.local.yaml
+
+# Mailtrap demo config
+mailtrap_demo_config.yaml
