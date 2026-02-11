@@ -20,16 +20,28 @@ source data-auto-system-env/bin/activate
 # Upgrade pip
 pip install --upgrade pip
 
-# Install production requirements
-echo "📥 Installing production requirements..."
-pip install -r requirements-production.txt
+# Install requirements based on selected mode
+case "$1" in
+    "streamlit")
+        echo "📥 Installing Streamlit requirements..."
+        pip install -r requirements-streamlit.txt
+        ;;
+    *)
+        echo "📥 Installing production requirements..."
+        pip install -r requirements-production.txt
+        ;;
+esac
 
 # Run the system
 echo "⚙️ Starting system components..."
 case "$1" in
     "dashboard")
-        echo "🌐 Starting dashboard..."
+        echo "🌐 Starting Flask dashboard..."
         cd dashboard && gunicorn --bind 0.0.0.0:5000 --workers 2 --timeout 120 app:app
+        ;;
+    "streamlit")
+        echo "📊 Starting Streamlit dashboard..."
+        streamlit run dashboard_streamlit.py --server.port 8501 --server.address 0.0.0.0
         ;;
     "scheduler")
         echo "🕒 Starting scheduler..."
@@ -42,12 +54,13 @@ case "$1" in
     "all")
         echo "🌟 Starting all components..."
         # In a real production setup, you'd use a process manager like systemd
-        # For now, we'll just start the dashboard
+        # For now, we'll just start the Flask dashboard
         cd dashboard && gunicorn --bind 0.0.0.0:5000 --workers 2 --timeout 120 app:app
         ;;
     *)
-        echo "Usage: $0 {dashboard|scheduler|analyzer|all}"
-        echo "dashboard - Start the web dashboard"
+        echo "Usage: $0 {dashboard|streamlit|scheduler|analyzer|all}"
+        echo "dashboard - Start the Flask web dashboard"
+        echo "streamlit - Start the Streamlit analytics dashboard"
         echo "scheduler - Start the task scheduler"
         echo "analyzer - Run the data analyzer"
         echo "all - Start all components (basic implementation)"

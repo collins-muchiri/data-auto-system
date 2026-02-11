@@ -41,7 +41,19 @@ cp config-production.yaml config.yaml
 ./start-production.sh dashboard
 ```
 
-### Option 2: Docker Deployment
+### Option 2: Streamlit Analytics Dashboard
+
+For a simple CSV upload and analytics interface:
+
+```bash
+# Install Streamlit requirements
+pip install -r requirements-streamlit.txt
+
+# Start the Streamlit dashboard
+./start-production.sh streamlit
+```
+
+### Option 3: Docker Deployment
 
 ```bash
 # Build and start the containers
@@ -89,8 +101,11 @@ The system uses `config-production.yaml` for settings. Key sections:
 ### Available Services
 
 ```bash
-# Start the dashboard
+# Start the Flask dashboard
 ./start-production.sh dashboard
+
+# Start the Streamlit analytics dashboard
+./start-production.sh streamlit
 
 # Start the scheduler
 ./start-production.sh scheduler
