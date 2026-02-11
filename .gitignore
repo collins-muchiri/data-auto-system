@@ -19,9 +19,12 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # Virtual Environment
 data-auto-system-env/
+venv/
+env/
 
 # IDE
 .vscode/
@@ -35,6 +38,7 @@ Thumbs.db
 
 # Logs
 logs/*.log
+*.log
 
 # Data files (except the raw directory structure)
 data/processed/*
@@ -52,3 +56,41 @@ config.local.yaml
 
 # Mailtrap demo config
 mailtrap_demo_config.yaml
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.crt
+*.cert
+*.secret
+
+# Cache
+.cache/
+*.cache
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+
+# Database
+*.db
+*.sqlite
+
+# Backup files
+*~
+*.bak
+*.backup
+
+# Streamlit cache
+.streamlit/
+.streamlit/cache/
+
+# Jupyter
+.ipynb_checkpoints/
