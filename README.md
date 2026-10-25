@@ -359,4 +359,8 @@ Please attribute if you use this system in your projects or publications.
 *Data Auto System - Making data analytics accessible to everyone* 🎯
 
 ## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details."# data-auto-system" 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details."# data-auto-system"
+
+## Contribution and license
+
+Issues and pull requests are welcome — please open an issue describing the proposed change before submitting substantive work. This project is released under the MIT License.
