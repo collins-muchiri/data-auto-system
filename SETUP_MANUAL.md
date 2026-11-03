@@ -1,4 +1,4 @@
-# Data Auto System - Setup and Operation Manual
+# Data Auto System: Setup and Operation Manual
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -211,11 +211,11 @@ Mailtrap provides a fake SMTP server for testing:
 
 The Data Auto System consists of several interconnected components:
 
-1. **Dashboard** (`dashboard/app.py`) - Web interface for monitoring
-2. **Scheduler** (`scripts/scheduler.py`) - Manages automated tasks
-3. **Analyzer** (`scripts/analyzer.py`) - Processes and analyzes data
-4. **Email Notifier** (`scripts/email_notifier.py`) - Sends notifications
-5. **Synthetic Data Generator** (`scripts/data/raw/synthetic_data.py`) - Creates sample data
+1. **Dashboard** (`dashboard/app.py`): Web interface for monitoring
+2. **Scheduler** (`scripts/scheduler.py`): Manages automated tasks
+3. **Analyzer** (`scripts/analyzer.py`): Processes and analyzes data
+4. **Email Notifier** (`scripts/email_notifier.py`): Sends notifications
+5. **Synthetic Data Generator** (`scripts/data/raw/synthetic_data.py`): Creates sample data
 
 ### Method 1: Run the Complete System
 
@@ -334,9 +334,9 @@ For a complete system test, follow this sequence:
 #### Development Mode
 For development, you might want to run components separately to see detailed logs:
 
-1. Terminal 1 - Dashboard: `python run_system.py --component dashboard`
-2. Terminal 2 - Scheduler: `cd scripts && python scheduler.py`
-3. Terminal 3 - Monitor logs: `tail -f logs/*.log`
+1. Terminal 1: Dashboard: `python run_system.py --component dashboard`
+2. Terminal 2: Scheduler: `cd scripts && python scheduler.py`
+3. Terminal 3: Monitor logs: `tail -f logs/*.log`
 
 #### Production Mode
 For production deployment, consider using process managers like systemd (Linux) or NSSM (Windows) to keep services running.
@@ -370,8 +370,8 @@ Check that the file was created:
 ### Log Files Location
 
 The system creates log files in the `logs` directory:
-- `scheduler.log` - Logs from the scheduler component
-- `email_notifier.log` - Logs from the email notification component
+- `scheduler.log`: Logs from the scheduler component
+- `email_notifier.log`: Logs from the email notification component
 
 ### Dashboard Monitoring
 

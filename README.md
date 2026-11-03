@@ -14,11 +14,11 @@ Turn complex data analysis into simple, one-click automation. No coding required
 
 **Stop wasting time on manual data tasks.** This system solves:
 
-- ✅ **Technical barriers** - No coding skills needed
-- ✅ **Time-consuming reporting** - Automated analysis in seconds  
-- ✅ **Inconsistent metrics** - Standardized analysis every time
-- ✅ **Manual email distribution** - Automated report delivery
-- ✅ **Limited accessibility** - Anyone can generate insights
+- ✅ **Technical barriers**: No coding skills needed
+- ✅ **Time-consuming reporting**: Automated analysis in seconds  
+- ✅ **Inconsistent metrics**: Standardized analysis every time
+- ✅ **Manual email distribution**: Automated report delivery
+- ✅ **Limited accessibility**: Anyone can generate insights
 
 **Perfect for:** Small businesses, sales teams, marketing departments, freelancers, students, and anyone who works with data.
 
@@ -223,10 +223,10 @@ pyyaml>=6.0        # Configuration
 ```
 
 ### Architecture:
-- **Modular design** - Easy to extend
-- **Error handling** - Robust and reliable
-- **Logging** - Full audit trail
-- **Portable** - Runs anywhere Python runs
+- **Modular design**: Easy to extend
+- **Error handling**: Robust and reliable
+- **Logging**: Full audit trail
+- **Portable**: Runs anywhere Python runs
 
 ---
 
@@ -299,11 +299,11 @@ pip install pandas matplotlib streamlit
 ## 📈 Sample Output
 
 ### Reports Generated:
-- 📊 **Sales Trend Analysis** - Daily/Weekly/Monthly trends
-- 🏆 **Top Products** - Revenue ranking and performance
-- 👥 **Customer Insights** - RFM segmentation
-- 📉 **Performance Metrics** - Key business indicators
-- 🔍 **Data Quality Report** - Missing values and anomalies
+- 📊 **Sales Trend Analysis**: Daily/Weekly/Monthly trends
+- 🏆 **Top Products**: Revenue ranking and performance
+- 👥 **Customer Insights**: RFM segmentation
+- 📉 **Performance Metrics**: Key business indicators
+- 🔍 **Data Quality Report**: Missing values and anomalies
 
 ### Visualizations:
 - Line charts for trends
@@ -317,10 +317,10 @@ pip install pandas matplotlib streamlit
 
 We welcome contributions! Here's how to help:
 
-1. **Report bugs** - Open an issue with details
-2. **Suggest features** - What would make this better for you?
-3. **Submit pull requests** - Code improvements welcome
-4. **Improve documentation** - Help others get started
+1. **Report bugs**: Open an issue with details
+2. **Suggest features**: What would make this better for you?
+3. **Submit pull requests**: Code improvements welcome
+4. **Improve documentation**: Help others get started
 
 ### Development Setup:
 ```bash
@@ -335,7 +335,7 @@ pip install -r requirements.txt
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License: see the [LICENSE](LICENSE) file for details.
 
 ### Attribution:
 Please attribute if you use this system in your projects or publications.
@@ -356,11 +356,11 @@ Please attribute if you use this system in your projects or publications.
 **Download now and transform your data workflow today!**
 
 ---
-*Data Auto System - Making data analytics accessible to everyone* 🎯
+*Data Auto System: Making data analytics accessible to everyone* 🎯
 
 ## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details."# data-auto-system"
+This project is licensed under the MIT License: see the [LICENSE](LICENSE) file for details."# data-auto-system"
 
 ## Contribution and license
 
-Issues and pull requests are welcome — please open an issue describing the proposed change before submitting substantive work. This project is released under the MIT License.
+Issues and pull requests are welcome: please open an issue describing the proposed change before submitting substantive work. This project is released under the MIT License.
